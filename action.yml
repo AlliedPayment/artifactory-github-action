@@ -1,0 +1,19 @@
+name: 'AlliedPayment artifactory Actions'
+description: 'Runs artifactory commands via GitHub Actions.'
+author:  'AlliedPayment'
+branding:
+  icon: 'cloud'
+  color: 'purple'
+inputs:
+  sha: 
+    description: 'sha to find'
+    required: true 
+  branch:
+    description: 'branch to find'
+    required: true 
+outputs:
+    build-version:
+      description: 'The version found in artifactory'
+runs:
+  using: 'docker'
+  image: './Dockerfile'
