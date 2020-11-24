@@ -18,11 +18,11 @@ namespace artifactory
             var sha = Environment.GetEnvironmentVariable("INPUT_SHA");
             var branch = Environment.GetEnvironmentVariable("INPUT_BRANCH");
             var artifactoryToken = Environment.GetEnvironmentVariable("ARTIFACTORY_TOKEN");
-
+            
 
             var svc = new ArtifactService(artifactoryToken);
-            //var sha = "58ddf91ac961cf0dd6e06a672c89e3efdd00a247";
-            //var branch = "bug/billgo500s";
+            //sha = "b150d5b0d26f4f9314a42a9435226751b7a011fa";
+           // branch = "master";
 
             var build = svc.FindBuilds(sha)
                     .FirstOrDefault(x => x.Branch == branch)
@@ -34,7 +34,8 @@ namespace artifactory
             }
             else
             {
-                Console.WriteLine("::set-output name=aws-build-version::{0}", build.Version);
+                Console.WriteLine("VERSION: " + build.Version);
+                Console.WriteLine("::set-output name=build-version::{0}", build.Version);
             }
 
             
