@@ -10,7 +10,10 @@ inputs:
     required: true 
   branch:
     description: 'branch to find'
-    required: true 
+    required: false
+  branches:
+    description: 'branches to find'
+    required: false  
 outputs:
     build-version:
       description: 'The version found in artifactory'
