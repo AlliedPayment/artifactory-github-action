@@ -59,7 +59,11 @@ namespace artifactory
                 Console.WriteLine("BRANCH: " + build.Branch);
                 Console.WriteLine("::set-output name=branch::{0}", build.Branch);
 
-                var searchClient = new Octokit.SearchClient(null);
+                var cn = new Octokit.GitHubClient(new Octokit.ProductHeaderValue("commit-status-updater"));
+                cn.Credentials = new Octokit.Credentials(System.Environment.GetEnvironmentVariable("GITHUB_TOKEN"));
+                var api = new Octokit.ApiConnection(cn.Connection);
+                
+                var searchClient = new Octokit.SearchClient(api);
                 var results = searchClient.SearchIssues(new SearchIssuesRequest(build.Sha)
                 {
                     Is = new IssueIsQualifier[] {IssueIsQualifier.PullRequest},
