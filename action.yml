@@ -17,6 +17,10 @@ inputs:
 outputs:
     build-version:
       description: 'The version found in artifactory'
+    branch:
+      description: 'The branch found in artifactory'
+    pr:
+      description: 'The pr found in artifactory (if any)'
 runs:
   using: 'docker'
   image: './Dockerfile'

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Octokit;
 
 namespace artifactory
 {
@@ -55,9 +56,25 @@ namespace artifactory
             {
                 Console.WriteLine("VERSION: " + build.Version);
                 Console.WriteLine("::set-output name=build-version::{0}", build.Version);
+                Console.WriteLine("::set-output name=branch::{0}", build.Branch);
+
+                var searchClient = new Octokit.SearchClient(null);
+                var results = searchClient.SearchIssues(new SearchIssuesRequest(build.Sha)
+                {
+                    Is = new IssueIsQualifier[] {IssueIsQualifier.PullRequest},
+                }).Result;
+
+                string pr = "";
+
+                var result = results.Items.OrderBy(x => x.State.Value).FirstOrDefault();
+                if (result != null)
+                {
+                    pr = "pr-" + result.Number;
+                    Console.WriteLine("::set-output name=pr::{0}", pr);
+                }
             }
 
-            
+
         }
 
         private static int GetPriority(BranchInfo branch, string sha)
