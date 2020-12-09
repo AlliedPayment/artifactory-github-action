@@ -56,6 +56,7 @@ namespace artifactory
             {
                 Console.WriteLine("VERSION: " + build.Version);
                 Console.WriteLine("::set-output name=build-version::{0}", build.Version);
+                Console.WriteLine("BRANCH: " + build.Branch);
                 Console.WriteLine("::set-output name=branch::{0}", build.Branch);
 
                 var searchClient = new Octokit.SearchClient(null);
@@ -70,6 +71,7 @@ namespace artifactory
                 if (result != null)
                 {
                     pr = "pr-" + result.Number;
+                    Console.WriteLine("PR: " + pr);
                     Console.WriteLine("::set-output name=pr::{0}", pr);
                 }
             }
