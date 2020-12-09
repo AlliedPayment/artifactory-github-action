@@ -69,6 +69,7 @@ namespace artifactory
                                    dict.GetValue("buildInfo.env.vcsroot.branch");
                 buildInfo.BuildNumber = dict.GetValue("buildInfo.env.BUILD_NUMBER");
                 buildInfo.BuildConfigurationName = dict.GetValue("buildInfo.env.teamcity.buildConfName");
+                buildInfo.Sha = sha;
                 results.Add(buildInfo);
             }
 
