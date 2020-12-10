@@ -74,7 +74,7 @@ namespace artifactory
                 var result = results.Items.OrderBy(x => x.State.Value).FirstOrDefault();
                 if (result != null)
                 {
-                    pr = "pr-" + result.Number;
+                    pr = result.Number.ToString();
                     Console.WriteLine("PR: " + pr);
                     Console.WriteLine("::set-output name=pr::{0}", pr);
                 }
