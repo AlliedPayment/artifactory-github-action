@@ -65,8 +65,13 @@ namespace artifactory
                 buildInfo.TeamCityBuildUrl = bi.BuildUrl;
                 var dict = bi.BuildProperties.ToDictionary(z => z.BuildPropertyKey, z => z.BuildPropertyValue);
                 buildInfo.Version = dict.GetValue("buildInfo.env.version.assembly");
-                buildInfo.Branch = dict.GetValue("buildInfo.env.teamcity.build.branch") ??
-                                   dict.GetValue("buildInfo.env.vcsroot.branch");
+                var branch = dict.GetValue("buildInfo.env.teamcity.build.branch") ??
+                                  dict.GetValue("buildInfo.env.vcsroot.branch");
+                if (branch == "refs/heads/master")
+                {
+                    branch = "master";
+                }
+                buildInfo.Branch = branch;
                 buildInfo.BuildNumber = dict.GetValue("buildInfo.env.BUILD_NUMBER");
                 buildInfo.BuildConfigurationName = dict.GetValue("buildInfo.env.teamcity.buildConfName");
                 buildInfo.Sha = sha;
