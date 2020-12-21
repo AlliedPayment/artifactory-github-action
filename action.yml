@@ -21,6 +21,8 @@ outputs:
       description: 'The branch found in artifactory'
     pr:
       description: 'The pr found in artifactory (if any)'
+    deployment_name:
+      description: 'The name for the deployment'
 runs:
   using: 'docker'
   image: './Dockerfile'

@@ -78,6 +78,15 @@ namespace artifactory
                     Console.WriteLine("PR: " + pr);
                     Console.WriteLine("::set-output name=pr::{0}", pr);
                 }
+
+                var deploymentName = build.Branch;
+                if (!string.IsNullOrEmpty(pr))
+                {
+                    deploymentName = "pr-" + pr;
+                }
+                Console.WriteLine("Deployment_Name: " + deploymentName);
+                Console.WriteLine("::set-output name=deployment_name::{0}", deploymentName);
+
             }
 
 
