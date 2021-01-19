@@ -45,6 +45,7 @@ namespace artifactory
 
             var build = svc.FindBuilds(sha)
                         .OrderByDescending(x => x.BuildStarted)
+                        .Where(x => !string.IsNullOrEmpty(x.Version))
                         .FirstOrDefault(x => branches
                         .Contains(x.Branch, StringComparer.CurrentCultureIgnoreCase));
             
