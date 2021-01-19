@@ -28,11 +28,20 @@ namespace artifactory
             var results = new List<ArtifactoryBuildInfo>();
             Console.WriteLine(sha);
 
+//            var aql = @"
+//{
+//  ""module.build.@buildInfo.env.build.vcs.number"": {
+//    ""$eq"": ""{0}""
+//  }
+//}
+//";
+
             var aql = @"
 {
-  ""module.build.@buildInfo.env.build.vcs.number"": {
-    ""$eq"": ""{0}""
-  }
+  ""$or"": [
+ {""module.build.@buildInfo.env.build.vcs.number"": {""$eq"": ""{0}""  }},
+ {""module.build.@buildInfo.env.GITHUB_SHA"": {""$eq"": ""{0}""  }}
+]
 }
 ";
 
