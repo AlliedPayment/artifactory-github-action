@@ -85,13 +85,24 @@ namespace artifactory
                 {
                     branch = "master";
                 }
+
+                Console.WriteLine("VERSION=" + buildInfo.Version);
+                Console.WriteLine("BRANCH=" + branch);
+
                 buildInfo.Branch = branch;
                 buildInfo.BuildNumber = dict.GetValue("buildInfo.env.BUILD_NUMBER") ??
                                         dict.GetValue("buildInfo.env.GITHUB_RUN_NUMBER");
+
                 buildInfo.BuildConfigurationName = dict.GetValue("buildInfo.env.teamcity.buildConfName") ??
-                                                   dict.GetValue("buildInfo.env.JFROG_CLI_BUILD_NAME")
+                                                   dict.GetValue("buildInfo.env.JFROG_CLI_BUILD_NAME");
+
+
+                Console.WriteLine("BuildNumber=" + buildInfo.BuildNumber);
+                Console.WriteLine("BuildConfigurationName =" + buildInfo.BuildConfigurationName);
                                                    ;
                 buildInfo.Sha = sha;
+                Console.WriteLine("SHA=" + buildInfo.Sha);
+
                 results.Add(buildInfo);
 
                 //GITHUB_REF 
