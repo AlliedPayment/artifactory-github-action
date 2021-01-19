@@ -44,7 +44,8 @@ namespace artifactory
             }
 
             var build = svc.FindBuilds(sha)
-                    .FirstOrDefault(x => branches
+                        .OrderByDescending(x => x.BuildStarted)
+                        .FirstOrDefault(x => branches
                         .Contains(x.Branch, StringComparer.CurrentCultureIgnoreCase));
             
             if (build == null)

@@ -72,6 +72,7 @@ namespace artifactory
                 buildInfo.BuildName = bi.BuildName;
                 buildInfo.ArtifactoryBuildNumber = bi.BuildNumber;
                 buildInfo.TeamCityBuildUrl = bi.BuildUrl;
+                buildInfo.BuildStarted = bi.BuildStarted;
                 var dict = bi.BuildProperties.ToDictionary(z => z.BuildPropertyKey, z => z.BuildPropertyValue);
                 buildInfo.Version = dict.GetValue("buildInfo.env.version.assembly") ??
                                     dict.GetValue("buildInfo.env.VERSION_NUMBER");
