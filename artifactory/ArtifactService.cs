@@ -73,18 +73,33 @@ namespace artifactory
                 buildInfo.ArtifactoryBuildNumber = bi.BuildNumber;
                 buildInfo.TeamCityBuildUrl = bi.BuildUrl;
                 var dict = bi.BuildProperties.ToDictionary(z => z.BuildPropertyKey, z => z.BuildPropertyValue);
-                buildInfo.Version = dict.GetValue("buildInfo.env.version.assembly");
+                buildInfo.Version = dict.GetValue("buildInfo.env.version.assembly") ??
+                                    dict.GetValue("buildInfo.env.VERSION_NUMBER");
+
                 var branch = dict.GetValue("buildInfo.env.teamcity.build.branch") ??
-                                  dict.GetValue("buildInfo.env.vcsroot.branch");
+                                  dict.GetValue("buildInfo.env.vcsroot.branch") ??
+                                  dict.GetValue("buildInfo.env.GITHUB_REF")
+                                  ;
                 if (branch == "refs/heads/master")
                 {
                     branch = "master";
                 }
                 buildInfo.Branch = branch;
-                buildInfo.BuildNumber = dict.GetValue("buildInfo.env.BUILD_NUMBER");
-                buildInfo.BuildConfigurationName = dict.GetValue("buildInfo.env.teamcity.buildConfName");
+                buildInfo.BuildNumber = dict.GetValue("buildInfo.env.BUILD_NUMBER") ??
+                                        dict.GetValue("buildInfo.env.GITHUB_RUN_NUMBER");
+                buildInfo.BuildConfigurationName = dict.GetValue("buildInfo.env.teamcity.buildConfName") ??
+                                                   dict.GetValue("buildInfo.env.JFROG_CLI_BUILD_NAME")
+                                                   ;
                 buildInfo.Sha = sha;
                 results.Add(buildInfo);
+
+                //GITHUB_REF 
+                //GITHUB_RUN_ID 
+                //GITHUB_RUN_NUMBER
+                //GITHUB_WORKFLOW 
+                //JFROG_CLI_BUILD_URL
+                //JFROG_CLI_BUILD_NUMBER 
+                //JFROG_CLI_BUILD_NAME 
             }
 
 
