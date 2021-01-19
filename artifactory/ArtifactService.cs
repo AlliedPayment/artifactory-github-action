@@ -80,6 +80,7 @@ namespace artifactory
                                   dict.GetValue("buildInfo.env.vcsroot.branch") ??
                                   dict.GetValue("buildInfo.env.GITHUB_REF")
                                   ;
+                branch = System.Text.RegularExpressions.Regex.Replace(branch, @"\/?refs\/heads\/(.*)", "$1");
                 if (branch == "refs/heads/master")
                 {
                     branch = "master";
